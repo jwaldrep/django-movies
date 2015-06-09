@@ -36,6 +36,10 @@ class Rater(models.Model):
     occupation = models.CharField(max_length=64)
     zip_code = models.PositiveIntegerField()
 
+    def __str__(self):
+        return 'User #{}'.format(self.id)
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=255)
     release_date = models.DateField()
@@ -43,9 +47,14 @@ class Movie(models.Model):
     imbdb_url = models.URLField()
     genre = models.PositiveSmallIntegerField()
 
+    def __str__(self):
+        return '{}'.format(self.title)
+
 class Rating(models.Model):
     user = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField()
     time = models.DateTimeField()
 
+    def __str__(self):
+        return '{} - {}'.format('*'*self.rating, self.movie.title)

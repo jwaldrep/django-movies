@@ -62,3 +62,6 @@ target/
 data/
 *.sqlite
 *.sqlite3
+ml-100k
+ml-100k*
+.idea
