@@ -36,6 +36,16 @@ class Rater(models.Model):
     occupation = models.CharField(max_length=64)
     zip_code = models.PositiveIntegerField()
 
+    def avg_rating(self):
+        ratings = [r['rating'] for r in self.rating_set.values()]
+        num = self.rating_set.count()
+        if num <= 0:
+            return 0
+        return sum(ratings) / num
+
+    def top_unseen(self, n=2):
+        pass
+
     def __str__(self):
         return 'User #{}'.format(self.id)
 
@@ -55,14 +65,14 @@ class Movie(models.Model):
         return sorted(rank_list, key=lambda x: x[1], reverse=True)
 
     def avg_rating(self):
-        ratings = [movie['rating'] for movie in self.rating_set.values()]
+        ratings = [r['rating'] for r in self.rating_set.values()]
         num = self.rating_count()
         if num <= 0:
             return 0
         return sum(ratings) / num
 
-    def top_rated(self, n=2):
-        return self.sorted_ratings()[:n]
+
+
 
     def __str__(self):
         return '{}'.format(self.title)
@@ -72,6 +82,12 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField()
     time = models.DateTimeField()
+
+    @classmethod
+    def top_rated(cls, n=2):
+        rating_objs = sorted(cls.objects.all(), key=lambda x: x.rating, reverse=True)
+        ratings = [(r.id, r.rating) for r in rating_objs]
+        return ratings[:n]
 
     def __str__(self):
         return '{} - {}'.format('*'*self.rating, self.movie.title)
