@@ -44,17 +44,25 @@ class Movie(models.Model):
     title = models.CharField(max_length=255)
     release_date = models.DateField()
     video_date = models.DateField()
-    imbdb_url = models.URLField()
+    imbdb_url = models.URLField()  # TODO: Fix typo and migrate
     genre = models.PositiveSmallIntegerField()
 
     def rating_count(self):
         return self.rating_set.count()
 
+    def sorted_ratings(self):
+        rank_list = [(r['movie_id'], r['rating']) for r in self.rating_set.values()]
+        return sorted(rank_list, key=lambda x: x[1], reverse=True)
+
     def avg_rating(self):
-        total = 0
         ratings = [movie['rating'] for movie in self.rating_set.values()]
         num = self.rating_count()
+        if num <= 0:
+            return 0
         return sum(ratings) / num
+
+    def top_rated(self, n=2):
+        return self.sorted_ratings()[:n]
 
     def __str__(self):
         return '{}'.format(self.title)

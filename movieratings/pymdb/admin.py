@@ -6,7 +6,7 @@ class RaterAdmin(admin.ModelAdmin):
     list_display = ['id', 'age', 'gender', 'occupation', 'zip_code']
 
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ['id', 'title', 'rating_count', 'avg_rating', 'release_date', 'genre', 'imbdb_url']
+    list_display = ['id', 'title', 'rating_count', 'avg_rating', 'sorted_ratings', 'top_rated', 'release_date', 'genre', 'imbdb_url']
 
 class RatingAdmin(admin.ModelAdmin):
     list_display = ['id', 'rating', 'movie', 'user', 'time']
