@@ -47,6 +47,15 @@ class Movie(models.Model):
     imbdb_url = models.URLField()
     genre = models.PositiveSmallIntegerField()
 
+    def rating_count(self):
+        return self.rating_set.count()
+
+    def avg_rating(self):
+        total = 0
+        ratings = [movie['rating'] for movie in self.rating_set.values()]
+        num = self.rating_count()
+        return sum(ratings) / num
+
     def __str__(self):
         return '{}'.format(self.title)
 
