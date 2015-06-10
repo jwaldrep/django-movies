@@ -57,6 +57,14 @@ class Rater(models.Model):
     def my_movies(self):
         return [r.movie for r in self.my_ratings()]
 
+    def ratings_vector(self):
+        movies = Movie.objects.all().order_by('pk')
+        vector = [0 for m in movies]
+        for i in range(len(vector)):
+            if movies[i] in self.my_movies():
+                vector[i] = self.my_ratings().filter(movie=movies[i])[0].rating
+        return vector
+
     def __str__(self):
         return 'User #{}'.format(self.id)
 
