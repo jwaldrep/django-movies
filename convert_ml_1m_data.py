@@ -7,7 +7,7 @@ with open("data/ml-1m/users.dat") as infile:
     reader = csv.reader((line.replace("::", ";") for line in infile),
                         delimiter=";")
     for row in reader:
-        users.append({"model": "movies.Rater",
+        users.append({"model": "pymdb.Rater",
                       "pk": row[0],
                       "fields": {
                           "age": row[2],
@@ -23,7 +23,7 @@ with open("data/ml-1m/movies.dat", encoding="windows-1252") as infile:
     reader = csv.reader((line.replace("::", ";") for line in infile),
                         delimiter=";")
     for row in reader:
-        movies.append({"model": "movies.Movie",
+        movies.append({"model": "pymdb.Movie",
                        "pk": row[0],
                        "fields": {
                            "title": row[1]
@@ -38,12 +38,13 @@ with open("data/ml-1m/ratings.dat") as infile:
     reader = csv.reader((line.replace("::", ";") for line in infile),
                         delimiter=";")
     for idx, row in enumerate(reader):
-        ratings.append({"model": "movies.Rating",
+        ratings.append({"model": "pymdb.Rating",
                         "pk": idx + 1,
                         "fields": {
                             "rater": row[0],
                             "movie": row[1],
-                            "rating": row[2]
+                            "rating": row[2],
+                            # "time": row[3],
                         }})
 
 with open("movieratings/fixtures/ratings.json", "w") as outfile:

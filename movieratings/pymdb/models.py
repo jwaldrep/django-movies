@@ -36,7 +36,7 @@ class Rater(models.Model):
     age = models.PositiveSmallIntegerField()
     gender = models.CharField(max_length=1)
     occupation = models.CharField(max_length=255)
-    zip_code = models.PositiveIntegerField()
+    zip_code = models.CharField(max_length=255)
 
     def avg_rating(self):
         ratings = [r['rating'] for r in self.rating_set.values()]
@@ -108,7 +108,7 @@ class Rating(models.Model):
     rater = models.ForeignKey(Rater)  # FIXME: Rename this field to rater
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField()
-    time = models.DateTimeField()
+    # time = models.DateTimeField()
 
     @classmethod
     def top_rated(cls, n=2):

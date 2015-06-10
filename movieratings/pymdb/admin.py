@@ -9,7 +9,7 @@ class MovieAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'rating_count', 'avg_rating', 'sorted_ratings']
 
 class RatingAdmin(admin.ModelAdmin):
-    list_display = ['id', 'rating', 'movie', 'rater', 'time', 'top_rated']
+    list_display = ['id', 'rating', 'movie', 'rater', 'top_rated']
 
 # Register your models here.
 admin.site.register(Rating, RatingAdmin)
