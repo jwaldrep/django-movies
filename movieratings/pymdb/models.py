@@ -44,7 +44,18 @@ class Rater(models.Model):
         return sum(ratings) / num
 
     def top_unseen(self, n=2):
-        pass
+        # all_movies = Movie.objects.all()
+        # my_movies = self.my_movies()
+        ratings = Rating.top_rated(n=None) # Sorted by rating
+        # seen = self.rating_set  # FIXME: How to get unseen??
+        # return unseen[:n]
+        return [r.movie for r in ratings if r.movie not in self.my_movies()]
+
+    def my_ratings(self):
+        return Rating.objects.filter(user=self.id)
+
+    def my_movies(self):
+        return [r.movie for r in self.my_ratings()]
 
     def __str__(self):
         return 'User #{}'.format(self.id)
@@ -78,16 +89,16 @@ class Movie(models.Model):
         return '{}'.format(self.title)
 
 class Rating(models.Model):
-    user = models.ForeignKey(Rater)
+    user = models.ForeignKey(Rater)  # FIXME: Rename this field to rater
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField()
     time = models.DateTimeField()
 
     @classmethod
     def top_rated(cls, n=2):
-        rating_objs = sorted(cls.objects.all(), key=lambda x: x.rating, reverse=True)
-        ratings = [(r.id, r.rating) for r in rating_objs]
-        return ratings[:n]
+        ratings = sorted(cls.objects.all(), key=lambda x: x.rating, reverse=True)
+        # ratings = [(r.id, r.rating) for r in rating_objs]
+        return ratings[:n] if n else ratings
 
     def __str__(self):
         return '{} - {}'.format('*'*self.rating, self.movie.title)

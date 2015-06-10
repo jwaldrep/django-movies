@@ -3,7 +3,7 @@ from .models import Movie, Rater, Rating
 
 
 class RaterAdmin(admin.ModelAdmin):
-    list_display = ['id', 'avg_rating', 'age', 'gender', 'occupation', 'zip_code']
+    list_display = ['id', 'avg_rating', 'my_ratings', 'my_movies', 'top_unseen', 'age', 'gender', 'occupation', 'zip_code']
 
 class MovieAdmin(admin.ModelAdmin):
     list_display = ['id', 'title', 'rating_count', 'avg_rating', 'sorted_ratings', 'release_date', 'genre', 'imbdb_url']
