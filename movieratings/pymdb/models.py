@@ -32,10 +32,10 @@ Schema Planning:
     Rating: (id), fk(Rater), fk(movie), rating, timestamp
 """
 class Rater(models.Model):
-    # user = models.ForeignKey(User)  # No, don't use this
+    # rater = models.ForeignKey(User)  # No, don't use this
     age = models.PositiveSmallIntegerField()
     gender = models.CharField(max_length=1)
-    occupation = models.CharField(max_length=64)
+    occupation = models.CharField(max_length=255)
     zip_code = models.PositiveIntegerField()
 
     def avg_rating(self):
@@ -79,10 +79,10 @@ class Rater(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
-    release_date = models.DateField()
-    video_date = models.DateField()
-    imbdb_url = models.URLField()  # TODO: Fix typo and migrate
-    genre = models.PositiveSmallIntegerField()
+    # release_date = models.DateField() # TODO: Remove for 1M database
+    # video_date = models.DateField() # TODO: Remove for 1M database
+    # imbdb_url = models.URLField()  # TODO: Remove for 1M database
+    # genre = models.PositiveSmallIntegerField()
 
     def rating_count(self):
         return self.rating_set.count()
@@ -105,7 +105,7 @@ class Movie(models.Model):
         return '{}'.format(self.title)
 
 class Rating(models.Model):
-    user = models.ForeignKey(Rater)  # FIXME: Rename this field to rater
+    rater = models.ForeignKey(Rater)  # FIXME: Rename this field to rater
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField()
     time = models.DateTimeField()
