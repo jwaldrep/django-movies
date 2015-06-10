@@ -1,4 +1,6 @@
 from django.db import models
+import math
+
 from django.contrib.auth.models import User
 
 # Create your models here.
@@ -64,6 +66,12 @@ class Rater(models.Model):
             if movies[i] in self.my_movies():
                 vector[i] = self.my_ratings().filter(movie=movies[i])[0].rating
         return vector
+
+    def euclidean_distance(self): #, other):
+        other = self.__class__.objects.first()
+        mine = self.ratings_vector()
+        yours = other.ratings_vector()
+        return math.sqrt(sum( (mine - yours)**2 for mine, yours in zip(mine, yours)))
 
     def __str__(self):
         return 'User #{}'.format(self.id)
