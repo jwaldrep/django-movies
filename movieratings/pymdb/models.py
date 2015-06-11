@@ -79,9 +79,9 @@ class Rater(models.Model):
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
-    # release_date = models.DateField() # TODO: Remove for 1M database
-    # video_date = models.DateField() # TODO: Remove for 1M database
-    # imbdb_url = models.URLField()  # TODO: Remove for 1M database
+    # release_date = models.DateField() # Removed for 1M database
+    # video_date = models.DateField() # Removed for 1M database
+    # imbdb_url = models.URLField()  # Removed for 1M database
     # genre = models.PositiveSmallIntegerField()
 
     def rating_count(self):

@@ -1,1 +1,14 @@
-User page
+{% extends "pymdb/base.html" %}
+
+{% block content %}
+<h2>{{ rater }}</h2>
+{#    {% for rater in raters %}#}
+{#    <li>{{ movie.avg_rating }} - {{ movie.ratings_set_count }}- {{ movie }}</li>#}
+{#    {% endfor %}#}
+<h3>Ratings</h3>
+    <ol>
+        {% for rating in ratings %}
+        <li>{{ rating }}</li>
+        {% endfor %}
+    </ol>
+{% endblock %}

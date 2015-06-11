@@ -1,2 +1,10 @@
+{% extends "pymdb/base.html" %}
+
+{% block content %}
 Index page
-{{ movies }}
+<ol>
+    {% for movie in movies %}
+    <li>{{ movie.avg_rating }} - {{ movie.ratings_set_count }}- {{ movie }}</li>
+    {% endfor %}
+</ol>
+{% endblock %}
