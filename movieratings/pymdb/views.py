@@ -8,7 +8,7 @@ def index(request):
     # movies = Rating.top_rated(20)
     # movies = Movie.objects.values('id').annotate(rating_count=Count('rating')).order_by('-rating_count')[:20]
         #    Employer.objects.values('id').annotate(jobtitle_count=Count('jobtitle')).order_by('-jobtitle_count')[:5]
-    movies = Movie.objects.annotate(Avg('rating__rating')).order_by('-rating__rating')[:20]
+    movies = Movie.objects.annotate(Avg('rating__rating')).order_by('-rating__rating__avg')[:20]
     # statuses = Status.objects.annotate(Count('favorite')).order_by('-posted_at')
     return render(request,
                   "pymdb/index.html",
