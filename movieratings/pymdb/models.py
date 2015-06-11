@@ -3,7 +3,6 @@ import math
 
 from django.contrib.auth.models import User
 
-# Create your models here.
 """
 Schema Planning:
     u.data:
@@ -37,6 +36,7 @@ class Rater(models.Model):
     gender = models.CharField(max_length=1)
     occupation = models.CharField(max_length=255)
     zip_code = models.CharField(max_length=255)
+    user = models.OneToOneField(User)
 
     def avg_rating(self):
         ratings = [r['rating'] for r in self.rating_set.values()]
@@ -76,6 +76,14 @@ class Rater(models.Model):
     def __str__(self):
         return 'User #{}'.format(self.id)
 
+    @classmethod
+    def create_users_for_raters(cls):
+        for rater in Rater.objects.all():
+            user = User.objects.create(
+                user=rater.id,
+                password='password',
+                email=rater.id + '@example.com',
+            )
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
