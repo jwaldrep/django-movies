@@ -20,6 +20,6 @@ from pymdb import views as pymdb_views
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', pymdb_views.index, name="index"),
-    url(r'^rater/(?P<rater_id>\d+)$', pymdb_views.show_rater, name="rater"),
-    url(r'^movie/(?P<movie_id>\d+)$', pymdb_views.show_movie, name="movie"),
+    url(r'^rater/(?P<rater_id>\d+)$', pymdb_views.show_rater, name="show_rater"),
+    url(r'^movie/(?P<movie_id>\d+)$', pymdb_views.show_movie, name="show_movie"),
 ]

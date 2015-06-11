@@ -9,8 +9,7 @@
     <ol>
         {% for rating in ratings %}
         <li>{{ rating.rating }} -
-{#            <a href="{% url 'show_rater' rating.rater.id %}">{{ rating.rater }}</a>#}
-            {{ rating.rater }}
+            <a href="{% url 'show_rater' rating.rater.id %}">{{ rating.rater }}</a>
         </li>
         {% endfor %}
     </ol>
