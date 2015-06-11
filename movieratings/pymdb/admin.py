@@ -12,6 +12,6 @@ class RatingAdmin(admin.ModelAdmin):
     list_display = ['id', 'rating', 'movie', 'rater', 'top_rated']
 
 # Register your models here.
-admin.site.register(Rating, RatingAdmin)
-admin.site.register(Rater, RaterAdmin)
+admin.site.register(Rating)#, RatingAdmin)
+admin.site.register(Rater)#, RaterAdmin)
 admin.site.register(Movie, MovieAdmin)
