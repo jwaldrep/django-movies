@@ -36,7 +36,7 @@ class Rater(models.Model):
     gender = models.CharField(max_length=1)
     occupation = models.CharField(max_length=255)
     zip_code = models.CharField(max_length=255)
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, null=True)
 
     def avg_rating(self):
         ratings = [r['rating'] for r in self.rating_set.values()]
