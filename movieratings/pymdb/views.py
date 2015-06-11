@@ -22,3 +22,16 @@ def show_rater(request, rater_id):
                   {'rater': rater,
                    'ratings': ratings,
                    })
+
+def show_movie(request, movie_id):
+    movie = Movie.objects.get(pk=movie_id)
+    # ratings = movie.sorted_ratings()
+    ratings = movie.rating_set.all()
+    num_ratings = movie.rating_count()
+    return render(request,
+                  'pymdb/movie.html',
+                  {'movie': movie,
+                   'ratings': ratings,
+                   'num_ratings': num_ratings,
+
+                   })
