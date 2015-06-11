@@ -80,10 +80,12 @@ class Rater(models.Model):
     def create_users_for_raters(cls):
         for rater in Rater.objects.all():
             user = User.objects.create(
-                user=rater.id,
+                username=str(rater.id)+'user',
                 password='password',
-                email=rater.id + '@example.com',
+                email=str(rater.id) + '@example.com',
             )
+            rater.user = user
+            rater.save()
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
