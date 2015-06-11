@@ -1,10 +1,12 @@
 {% extends "pymdb/base.html" %}
 
 {% block content %}
-Index page
+<h2>Top 20 Movies:</h2>
 <ol>
     {% for movie in movies %}
-    <li>{{ movie.avg_rating }} - {{ movie.ratings_set_count }}- {{ movie }}</li>
+    <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+        - Rating: {{ movie.avg_rating|floatformat:"3" }} ({{ movie.rating_count }})
+    </li>
     {% endfor %}
 </ol>
 {% endblock %}

@@ -2,10 +2,11 @@
 
 {% block content %}
 <h2>{{ rater }}</h2>
-{#    {% for rater in raters %}#}
-{#    <li>{{ movie.avg_rating }} - {{ movie.ratings_set_count }}- {{ movie }}</li>#}
-{#    {% endfor %}#}
-<h3>Ratings</h3>
+    <p>Age: {{ rater.age }}</p>
+    <p>Gender: {{ rater.gender }}</p>
+    <p>Occupation: <{{ rater.occupation }}/p>
+    <p>Zip Code: {{ rater.zip_code }}</p>
+    <h3>Ratings</h3>
     <ol>
         {% for rating in ratings %}
         <li>{{ rating.rating }} -
