@@ -1,0 +1,14 @@
+{% extends "pymdb/base.html" %}
+
+{% block content %}
+    <h2>Register</h2>
+
+    <form method="POST" action="{% url 'user_register' %}">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ rater_form.as_p }}
+
+        <!-- Provide a button to click to submit the form. -->
+        <input type="submit" name="submit" value="Register"/>
+    </form>
+{% endblock %}

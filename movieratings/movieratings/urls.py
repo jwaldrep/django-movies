@@ -19,7 +19,9 @@ from pymdb import views as pymdb_views
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url('^', include('django.contrib.auth.urls')),  # FIXME: Is this needed?
     url(r'^$', pymdb_views.index, name="index"),
     url(r'^rater/(?P<rater_id>\d+)$', pymdb_views.show_rater, name="show_rater"),
     url(r'^movie/(?P<movie_id>\d+)$', pymdb_views.show_movie, name="show_movie"),
+    url(r'^register/$', pymdb_views.user_register, name="user_register"),
 ]
