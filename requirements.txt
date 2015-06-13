@@ -4,3 +4,4 @@ pandas==0.16.1
 python-dateutil==2.4.2
 pytz==2015.4
 six==1.9.0
+django-debug-toolbar
