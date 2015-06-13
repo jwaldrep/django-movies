@@ -16,9 +16,9 @@ class RaterForm(forms.ModelForm):
         fields = ('age', 'gender', 'occupation', 'zip_code')
 
 class RatingForm(forms.ModelForm):
-    rater = forms.CharField(widget=forms.HiddenInput())
-    movie = forms.CharField(widget=forms.HiddenInput())
+    # rater = forms.CharField(widget=forms.HiddenInput())
+    # movie = forms.CharField(widget=forms.HiddenInput())
 
     class Meta:
         model = Rating
-        fields = ('rater', 'movie', 'rating')
+        fields = ('rating',) # 'rater', 'movie', 'rating')

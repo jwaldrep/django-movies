@@ -33,8 +33,21 @@ def show_movie(request, movie_id):
     # ratings = movie.sorted_ratings()
     ratings = movie.rating_set.all()
     num_ratings = movie.rating_count()
+    rater=request.user.rater
+
+    r = Rating.objects.get(rater=rater, movie=movie)
+
     if request.method == "GET":
-        rating_form = RatingForm()
+        rating_form = RatingForm(instance=r)
+
+    elif request.method == "POST":
+        rating_form = RatingForm(request.POST, instance=r)
+        rating_form.rater = r.rater_id
+        rating_form.movie = r.movie
+        if rating_form.is_valid():
+            rating = rating_form.save(commit=False)
+            rating.save()
+
     return render(request,
                   'pymdb/movie.html',
                   {'movie': movie,
@@ -83,34 +96,25 @@ def logout_view(request):
     return redirect('index')
 
 
-def rate(request):
-    if request.method == "GET":
-        user_form = UserForm()
-        rater_form = RaterForm()
-    elif request.method == "POST":
-        user_form = UserForm(request.POST)
-        rater_form = RaterForm(request.POST)
-        if user_form.is_valid() and rater_form.is_valid():
-            user = user_form.save()
-            rater = rater_form.save(commit=False)
-            rater.user = user
-            rater.save()
-
-            password = user.password
-            # The form doesn't know to call this special method on user.
-            user.set_password(password)
-            user.save()
-
-            # You must call authenticate before login. :(
-            user = authenticate(username=user.username,
-                                password=password)
-            login(request, user)
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                "Congratulations, {}, on creating your new account! You are now logged in.".format(
-                    user.username))
-            return redirect('index')
-    return render(request, "pymdb/register.html", {'user_form': user_form,
-                                                   'rater_form': rater_form})
-
+# def rate(request, movie_id, user):
+#     if request.method == "GET":
+#         rating_form = RatingForm()
+#       # FIXME: Add redirect here? Does this ever run?
+#     elif request.method == "POST":
+#         r = Rating.objects.get(pk=1)
+#         rating_form = RatingForm(request.POST, instance=r)
+#         if rating_form.is_valid():
+#             rating = rating_form.save(commit=False)
+#             rating.save()
+#             # rater.user = user
+#             # rater.save()
+#             #
+#             # messages.add_message(
+#             #     request,
+#             #     messages.SUCCESS,
+#             #     "Congratulations, {}, on creating your new account! You are now logged in.".format(
+#             #         user.username))
+#             # return redirect('index')
+#     return render(request, "movie", {'rating_form': rating_form,   # FIXME: Add redirect
+#                                      })
+#     # return redirect('index')

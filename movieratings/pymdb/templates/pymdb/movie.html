@@ -5,7 +5,7 @@
 {#    {% for rater in raters %}#}
 {#    <li>{{ movie.avg_rating }} - {{ movie.ratings_set_count }}- {{ movie }}</li>#}
 {#    {% endfor %}#}
-    <form method="POST" action="{% url 'rate' %}">
+    <form method="POST" action="{% url 'show_movie' movie.id %}">
     {% csrf_token %}
     {{ rating_form.as_p }}
 

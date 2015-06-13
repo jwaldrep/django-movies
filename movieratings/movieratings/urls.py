@@ -25,6 +25,6 @@ urlpatterns = [
     url(r'^movie/(?P<movie_id>\d+)$', pymdb_views.show_movie, name="show_movie"),
     url(r'^register/$', pymdb_views.user_register, name="user_register"),
     url(r'^logout$', pymdb_views.logout_view, name="logout"),
-    url(r'rate/$', pymdb_views.rate, name="rate"),
+    # url(r'rate/$', pymdb_views.rate, name="rate"),
 
 ]
