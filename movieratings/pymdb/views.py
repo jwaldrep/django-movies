@@ -7,6 +7,8 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 
 
+# FIXME: Prevent multiple users from logging in simultaneously
+
 def index(request):
     # movies = Rating.top_rated(20)
     # movies = Movie.objects.values('id').annotate(rating_count=Count('rating')).order_by('-rating_count')[:20]
