@@ -70,3 +70,10 @@ def user_register(request):
             return redirect('index')
     return render(request, "pymdb/register.html", {'user_form': user_form,
                                                    'rater_form': rater_form})
+
+
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
