@@ -30,6 +30,8 @@ Schema Planning:
 
     Rating: (id), fk(Rater), fk(movie), rating, timestamp
 """
+
+# FIXME: Ensure that new users are associated with a Rater
 class Rater(models.Model):
     # rater = models.ForeignKey(User)  # No, don't use this
     age = models.PositiveSmallIntegerField()
@@ -82,10 +84,19 @@ class Rater(models.Model):
             user = User.objects.create(
                 username=str(rater.id)+'user',
                 password='password',
+                # ^^ This method won't work -- need to use set_password()!
                 email=str(rater.id) + '@example.com',
             )
             rater.user = user
             rater.save()
+
+    @classmethod
+    def reset_all_passwords(cls):
+        for rater in Rater.objects.all():
+            u = rater.user
+            print(u, "password reset to 'password'.")
+            u.set_password('password')
+            u.save()
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
