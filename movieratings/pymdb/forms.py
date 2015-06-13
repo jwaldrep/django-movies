@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Rater
+from .models import Rater, Rating
 
 
 class UserForm(forms.ModelForm):
@@ -15,4 +15,10 @@ class RaterForm(forms.ModelForm):
         model = Rater
         fields = ('age', 'gender', 'occupation', 'zip_code')
 
+class RatingForm(forms.ModelForm):
+    rater = forms.CharField(widget=forms.HiddenInput())
+    movie = forms.CharField(widget=forms.HiddenInput())
 
+    class Meta:
+        model = Rating
+        fields = ('rater', 'movie', 'rating')
