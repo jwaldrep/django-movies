@@ -35,10 +35,12 @@ def show_movie(request, movie_id):
     # ratings = movie.sorted_ratings()
     ratings = movie.rating_set.all()
     num_ratings = movie.rating_count()
-    rater=request.user.rater
+
     try:
+        rater=None
+        rater=request.user.rater
         r = Rating.objects.get(rater=rater, movie=movie)
-    except ObjectDoesNotExist:
+    except (ObjectDoesNotExist, AttributeError):
         r = None
 
     if request.method == "GET":
@@ -53,7 +55,8 @@ def show_movie(request, movie_id):
             rating_form = RatingForm(request.POST)
         # rating_form.rater = rater  # Can't do this until after an uncommitted save...
         # rating_form.movie = movie
-        if rating_form.is_valid():
+        if rating_form.is_valid() and not request.user.is_anonymous():
+            # FIXME: Add error message for anon user trying to rate
             rating = rating_form.save(commit=False)
             rating.rater = rater
             rating.movie = movie
