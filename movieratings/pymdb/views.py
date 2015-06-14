@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 from pymdb.forms import UserForm, RaterForm, RatingForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
+
 
 
 # FIXME: Prevent multiple users from logging in simultaneously
@@ -27,26 +29,39 @@ def show_rater(request, rater_id):
                   {'rater': rater,
                    'ratings': ratings,
                    })
-
+# FIXME: 'AnonymousUser' object has no attribute 'rater'
 def show_movie(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
     # ratings = movie.sorted_ratings()
     ratings = movie.rating_set.all()
     num_ratings = movie.rating_count()
     rater=request.user.rater
-
-    r = Rating.objects.get(rater=rater, movie=movie)
+    try:
+        r = Rating.objects.get(rater=rater, movie=movie)
+    except ObjectDoesNotExist:
+        r = None
 
     if request.method == "GET":
-        rating_form = RatingForm(instance=r)
-
+        if r:
+            rating_form = RatingForm(instance=r)
+        else:
+            rating_form = RatingForm()
     elif request.method == "POST":
-        rating_form = RatingForm(request.POST, instance=r)
-        rating_form.rater = r.rater_id
-        rating_form.movie = r.movie
+        if r:
+            rating_form = RatingForm(request.POST, instance=r)
+        else:
+            rating_form = RatingForm(request.POST)
+        # rating_form.rater = rater  # Can't do this until after an uncommitted save...
+        # rating_form.movie = movie
         if rating_form.is_valid():
             rating = rating_form.save(commit=False)
-            rating.save()
+            rating.rater = rater
+            rating.movie = movie
+            # rating.save()
+            # debug = [(x, getattr(rating_form, x)) for x in dir(rating_form)[65:]] #strike 4,65 >65 ok
+            # debug2 = (dir(rating_form)[4], dir(rating_form)[65])
+            # bug = 1/0
+            rating_form.save()
 
     return render(request,
                   'pymdb/movie.html',
