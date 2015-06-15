@@ -13,14 +13,14 @@ with open("data/ml-1m/users.dat") as infile:
                       "fields": {
                           "gender": row[1],
                           "age": row[2],
-                          "occupation": row[3],
+                          "job": row[3],
                           "zip_code": row[4],
                       }})
 
 with open("movieratings/fixtures/users.json", "w") as outfile:
     outfile.write(json.dumps(users))
 
-genres = [
+genres_list = [
     "Action",
     "Adventure",
     "Animation",
@@ -40,11 +40,11 @@ genres = [
     "War",
     "Western"]
 
-genre_dict = dict(zip(genres, range(20)))
+genre_dict = dict(zip(genres_list, range(20)))
 
 print("Converting genres...")
 genres = []
-for genre in genres:
+for genre in genres_list:
     genres.append({"model": "pymdb.Genre",
                    "pk": genre_dict[genre],
                    "fields": {
@@ -52,7 +52,7 @@ for genre in genres:
                        "name": genre,
                    }})
 
-with open("movieratings/fixtures/movies.json", "w") as outfile:
+with open("movieratings/fixtures/genres.json", "w") as outfile:
     outfile.write(json.dumps(genres))
 
 
@@ -65,7 +65,7 @@ with open("data/ml-1m/movies.dat", encoding="windows-1252") as infile:
         # print('0:', row[0], '1:', row[1], '2:', row[2])
         movies.append({"model": "pymdb.Movie",
                        "pk": row[0],
-                       # "fields": {
+                       "fields": {
                        #     "title": row[1],
                            "genre": [genre_dict[genre] for genre in row[2].split('|')],
                        }})
@@ -86,7 +86,7 @@ with open("data/ml-1m/ratings.dat") as infile:
                             "movie": row[1],
                             "rating": row[2],
                              #"time": row[3],
-                            "time": str(datetime.datetime.fromtimestamp(int(row[3])))
+                            "time_added": str(datetime.datetime.fromtimestamp(int(row[3])))
                         }})
 
 with open("movieratings/fixtures/ratings.json", "w") as outfile:

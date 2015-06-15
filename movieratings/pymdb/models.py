@@ -44,7 +44,8 @@ class Rater(models.Model):
     # rater = models.ForeignKey(User)  # No, don't use this
     age = models.PositiveSmallIntegerField()
     gender = models.CharField(max_length=1)
-    occupation = models.PositiveSmallIntegerField()
+    occupation = models.CharField(max_length=255, null=True) # FIXME: Delete this field
+    job = models.PositiveSmallIntegerField(null=True)
     zip_code = models.CharField(max_length=255)
     user = models.OneToOneField(User, null=True)
 

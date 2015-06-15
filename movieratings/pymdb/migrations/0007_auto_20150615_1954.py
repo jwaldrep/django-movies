@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import datetime
+from django.utils.timezone import utc
 
 
 class Migration(migrations.Migration):
@@ -15,24 +16,24 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Genre',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
+                ('id', models.AutoField(serialize=False, primary_key=True, auto_created=True, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
             ],
         ),
         migrations.AddField(
+            model_name='rater',
+            name='job',
+            field=models.PositiveSmallIntegerField(null=True),
+        ),
+        migrations.AddField(
             model_name='rating',
             name='time_added',
-            field=models.DateTimeField(default=datetime.datetime(2015, 6, 15, 19, 30, 5, 630878)),
+            field=models.DateTimeField(default=datetime.datetime(2015, 6, 15, 19, 54, 36, 104619, tzinfo=utc)),
         ),
         migrations.AddField(
             model_name='rating',
             name='time_modified',
-            field=models.DateTimeField(default=datetime.datetime(2015, 6, 15, 19, 30, 5, 630906)),
-        ),
-        migrations.AlterField(
-            model_name='rater',
-            name='occupation',
-            field=models.PositiveSmallIntegerField(),
+            field=models.DateTimeField(default=datetime.datetime(2015, 6, 15, 19, 54, 36, 104658, tzinfo=utc)),
         ),
         migrations.AddField(
             model_name='movie',
