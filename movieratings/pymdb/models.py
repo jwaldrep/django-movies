@@ -36,7 +36,7 @@ class Rater(models.Model):
     # rater = models.ForeignKey(User)  # No, don't use this
     age = models.PositiveSmallIntegerField()
     gender = models.CharField(max_length=1)
-    occupation = models.CharField(max_length=255)
+    occupation = models.PositiveSmallIntegerField()
     zip_code = models.CharField(max_length=255)
     user = models.OneToOneField(User, null=True)
 
@@ -103,7 +103,7 @@ class Movie(models.Model):
     # release_date = models.DateField() # Removed for 1M database
     # video_date = models.DateField() # Removed for 1M database
     # imbdb_url = models.URLField()  # Removed for 1M database
-    # genre = models.PositiveSmallIntegerField()
+    genre = models.ManyToManyField(Genre)
 
     def rating_count(self):
         return self.rating_set.count()
@@ -119,17 +119,23 @@ class Movie(models.Model):
             return 0
         return sum(ratings) / num
 
-
-
-
     def __str__(self):
         return '{}'.format(self.title)
+
+class Genre(models.Model):
+    id = models.SmallIntegerField()
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
 
 class Rating(models.Model):
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField()
-    # time = models.DateTimeField()
+    time_added = models.DateTimeField()
+    time_modified = models.DateTimeField()
 
     @classmethod
     def top_rated(cls, n=2):
