@@ -1,7 +1,8 @@
 from django.db import models
 import math
-
+import datetime
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 """
 Schema Planning:
@@ -30,6 +31,13 @@ Schema Planning:
 
     Rating: (id), fk(Rater), fk(movie), rating, timestamp
 """
+
+class Genre(models.Model):
+    # id = models.SmallIntegerField()
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return '{}'.format(self.name)
 
 # FIXME: Ensure that new users are associated with a Rater
 class Rater(models.Model):
@@ -122,20 +130,13 @@ class Movie(models.Model):
     def __str__(self):
         return '{}'.format(self.title)
 
-class Genre(models.Model):
-    id = models.SmallIntegerField()
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return '{}'.format(self.name)
-
 
 class Rating(models.Model):
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField()
-    time_added = models.DateTimeField()
-    time_modified = models.DateTimeField()
+    time_added = models.DateTimeField(default=timezone.now())
+    time_modified = models.DateTimeField(default=timezone.now())
 
     @classmethod
     def top_rated(cls, n=2):

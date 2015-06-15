@@ -48,7 +48,7 @@ for genre in genres:
     genres.append({"model": "pymdb.Genre",
                    "pk": genre_dict[genre],
                    "fields": {
-                       "id": genre_dict[genre],
+                       # "id": genre_dict[genre],
                        "name": genre,
                    }})
 
@@ -62,11 +62,11 @@ with open("data/ml-1m/movies.dat", encoding="windows-1252") as infile:
     reader = csv.reader((line.replace("::", "_") for line in infile),
                         delimiter="_")
     for row in reader:
-        print('0:', row[0], '1:', row[1], '2:', row[2])
+        # print('0:', row[0], '1:', row[1], '2:', row[2])
         movies.append({"model": "pymdb.Movie",
                        "pk": row[0],
-                       "fields": {
-                           "title": row[1],
+                       # "fields": {
+                       #     "title": row[1],
                            "genre": [genre_dict[genre] for genre in row[2].split('|')],
                        }})
 
