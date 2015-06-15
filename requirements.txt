@@ -6,3 +6,5 @@ pytz==2015.4
 six==1.9.0
 django-debug-toolbar
 django-extensions
+werkzeug
+psycopg2
