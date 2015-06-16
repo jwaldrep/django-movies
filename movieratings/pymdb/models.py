@@ -3,6 +3,8 @@ import math
 import datetime
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.core.exceptions import ValidationError
+
 
 """
 Schema Planning:
@@ -31,6 +33,12 @@ Schema Planning:
 
     Rating: (id), fk(Rater), fk(movie), rating, timestamp
 """
+
+
+def validate_movie_rating(value):
+    if not 1 <= value <= 5:
+        raise ValidationError("Rating must be between 1 and 5.")
+
 
 class Genre(models.Model):
     # id = models.SmallIntegerField()
@@ -137,7 +145,7 @@ class Movie(models.Model):
 class Rating(models.Model):
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
-    rating = models.PositiveSmallIntegerField()
+    rating = models.PositiveSmallIntegerField(validators=[validate_movie_rating])
     time_added = models.DateTimeField(default=timezone.now())
     time_modified = models.DateTimeField(default=timezone.now())
 
