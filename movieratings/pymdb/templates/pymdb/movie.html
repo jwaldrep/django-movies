@@ -16,6 +16,7 @@
         {% for rating in ratings %}
         <li>{{ rating.rating }} -
             <a href="{% url 'show_rater' rating.rater.id %}">{{ rating.rater }}</a>
+        - {{ rating.time_added }}
         </li>
         {% endfor %}
     </ol>

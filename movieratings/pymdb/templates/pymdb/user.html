@@ -12,6 +12,7 @@
         {% for rating in ratings %}
         <li>{{ rating.rating }} -
           <a href="{% url 'show_movie' rating.movie.id %}">{{ rating.movie }}</a>
+          - {{ rating.time_modified }}
         </li>
         {% endfor %}
     </ol>

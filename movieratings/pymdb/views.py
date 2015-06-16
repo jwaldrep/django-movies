@@ -29,6 +29,7 @@ def index(request):
 def show_rater(request, rater_id):
     rater = Rater.objects.get(pk=rater_id)
     ratings = sorted(rater.my_ratings(), key=lambda x: x.rating, reverse=True)
+    ratings = Rating.objects.filter(rater=rater).order_by('-time_added')
     return render(request,
                   'pymdb/user.html',
                   {'rater': rater,
@@ -38,7 +39,7 @@ def show_rater(request, rater_id):
 def show_movie(request, movie_id):
     movie = Movie.objects.get(pk=movie_id)
     # ratings = movie.sorted_ratings()
-    ratings = movie.rating_set.all()
+    ratings = movie.rating_set.all().order_by('-time_added')
     num_ratings = movie.rating_count()
 
     try:

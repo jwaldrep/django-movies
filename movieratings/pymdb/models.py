@@ -91,11 +91,13 @@ class Rater(models.Model):
     def create_users_for_raters(cls):
         for rater in Rater.objects.all():
             user = User.objects.create(
-                username=str(rater.id)+'user',
+                username='user' + str(rater.id).zfill(5),
                 password='password',
                 # ^^ This method won't work -- need to use set_password()!
                 email=str(rater.id) + '@example.com',
             )
+            user.set_password('password')
+            user.save()
             rater.user = user
             rater.save()
 
@@ -144,6 +146,12 @@ class Rating(models.Model):
         ratings = sorted(cls.objects.all(), key=lambda x: x.rating, reverse=True)
         # ratings = [(r.id, r.rating) for r in rating_objs]
         return ratings[:n] if n else ratings
+
+    @classmethod
+    def set_modified_date_to_add_date(cls):
+        for rating in Rating.objects.all():
+            rating.time_modified = rating.time_added
+            rating.save()
 
     def __str__(self):
         return '{} - {}'.format('*' * self.rating, self.movie.title)
