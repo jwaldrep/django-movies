@@ -66,7 +66,7 @@ with open("data/ml-1m/movies.dat", encoding="windows-1252") as infile:
         movies.append({"model": "pymdb.Movie",
                        "pk": row[0],
                        "fields": {
-                       #     "title": row[1],
+                           "title": row[1],
                            "genre": [genre_dict[genre] for genre in row[2].split('|')],
                        }})
 

@@ -15,11 +15,16 @@ def index(request):
     # movies = Rating.top_rated(20)
     # movies = Movie.objects.values('id').annotate(rating_count=Count('rating')).order_by('-rating_count')[:20]
         #    Employer.objects.values('id').annotate(jobtitle_count=Count('jobtitle')).order_by('-jobtitle_count')[:5]
-    movies = Movie.objects.annotate(Avg('rating__rating')).order_by('-rating__rating__avg')[:20]
+    movies = Movie.objects.annotate(rating_avg=Avg('rating__rating')).annotate(rating_count=Count('rating__rating')).filter(rating_count__gte=10).order_by('-rating_avg')[:20]
+    # counts = movies.
+# Item.objects.annotate(type_count=models.Count("type")).filter(type_count__gt=1).order_by("-type_count")
+
     # statuses = Status.objects.annotate(Count('favorite')).order_by('-posted_at')
     return render(request,
                   "pymdb/index.html",
-                  {"movies": movies})
+                  {"movies": movies,
+                   # "counts": counts,
+                   })
 
 def show_rater(request, rater_id):
     rater = Rater.objects.get(pk=rater_id)
