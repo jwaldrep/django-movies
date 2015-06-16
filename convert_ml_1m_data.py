@@ -86,7 +86,8 @@ with open("data/ml-1m/ratings.dat") as infile:
                             "movie": row[1],
                             "rating": row[2],
                              #"time": row[3],
-                            "time_added": str(datetime.datetime.fromtimestamp(int(row[3])))
+                            "time_added": str(datetime.datetime.fromtimestamp(int(row[3]), tz=datetime.timezone.utc))
+                                #tzinfo
                         }})
 
 with open("movieratings/fixtures/ratings.json", "w") as outfile:
