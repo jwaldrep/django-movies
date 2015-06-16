@@ -91,6 +91,9 @@ def show_movie(request, movie_id):
             # debug2 = (dir(rating_form)[4], dir(rating_form)[65])
             # bug = 1/0
             rating_form.save()
+            messages.add_message(request, messages.SUCCESS,
+             "Your rating has been saved. Thank you for contributing!")
+
 
     return render(request,
                   'pymdb/movie.html',
@@ -138,6 +141,9 @@ from django.contrib.auth import logout
 
 def logout_view(request):
     logout(request)
+    messages.add_message(request, messages.SUCCESS,
+         "You have successfully logged out of PyMDb.")
+
     return redirect('index')
 
 # def rate(request, movie_id, user):
