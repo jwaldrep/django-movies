@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'django_extensions',
     'pymdb',
+    'bootstrap3'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -111,5 +112,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = ( 'static', ) # TODO: join with BASE_DIR...
 
 LOGIN_REDIRECT_URL = 'index'

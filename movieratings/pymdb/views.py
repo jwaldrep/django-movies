@@ -15,7 +15,7 @@ def show_genre(request, genre_id):
                  .annotate(rating_avg=Avg('rating__rating')) \
                  .annotate(rating_count=Count('rating__rating')) \
                  .filter(rating_count__gte=10) \
-                 .order_by('-rating_avg')[:20]
+                 .order_by('-rating_avg')[:20] # TODO: Add lt 10 movies separately
     genre = movies[0].genre
     return render(request,
                   "pymdb/genre.html",
