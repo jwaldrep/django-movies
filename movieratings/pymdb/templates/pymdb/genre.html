@@ -1,0 +1,13 @@
+{% extends "pymdb/base.html" %}
+
+{% block content %}
+<h2>Top 20 Movies in this genre:</h2>
+<ol>
+    {% for movie in movies %}
+    <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+        - Rating: {{ movie.rating_avg|floatformat:"3" }} ({{ movie.rating_count }})
+    </li>
+    {% endfor %}
+
+</ol>
+{% endblock %}

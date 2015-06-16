@@ -10,6 +10,16 @@ from django.core.exceptions import ObjectDoesNotExist
 
 
 # FIXME: Prevent multiple users from logging in simultaneously
+def show_genre(request, genre_id):
+    movies = Movie.objects.filter(genre=genre_id)\
+        .annotate(rating_avg = Avg('rating__rating'))\
+        .annotate(rating_count=Count('rating__rating'))\
+        .filter(rating_count__gte=10)\
+        .order_by('-rating_avg')[:20]
+    genre = movies[0].genre
+    return render(request,
+                  "pymdb/genre.html",
+                  {"movies": movies})
 
 def index(request):
     # movies = Rating.top_rated(20)
@@ -29,7 +39,7 @@ def index(request):
 
 def show_rater(request, rater_id):
     rater = Rater.objects.get(pk=rater_id)
-    ratings = sorted(rater.my_ratings(), key=lambda x: x.rating, reverse=True)
+    # ratings = sorted(rater.my_ratings(), key=lambda x: x.rating, reverse=True)
     ratings = Rating.objects.filter(rater=rater).order_by('-time_added')
     return render(request,
                   'pymdb/user.html',
@@ -43,6 +53,7 @@ def show_movie(request, movie_id):
     ratings = movie.rating_set.all().order_by('-time_added')
     num_ratings = movie.rating_count()
 
+    #FIXME: Rewrite to use a single query instead of many
     try:
         rater=None
         rater=request.user.rater

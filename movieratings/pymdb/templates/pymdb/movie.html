@@ -2,6 +2,11 @@
 
 {% block content %}
 <h2>{{ movie.title }}</h2>
+    <p>Genres:</p>
+    <ul>{%  for genre in movie.genre.all %}
+     <li><a href="{% url 'show_genre' genre.id %}">fit sgi{{ genre }}</a></li>
+    {% endfor %}
+    </ul>
 {#    {% for rater in raters %}#}
 {#    <li>{{ movie.avg_rating }} - {{ movie.ratings_set_count }}- {{ movie }}</li>#}
 {#    {% endfor %}#}
