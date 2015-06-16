@@ -10,7 +10,8 @@
     <h3>Ratings</h3>
     <ol>
         {% for rating in ratings %}
-        <li>{{ rating.rating }} -
+            <li><span class="badge">{{ rating.rating }}
+                </span>
           <a href="{% url 'show_movie' rating.movie.id %}">{{ rating.movie }}</a>
           - {{ rating.time_modified }}
         </li>

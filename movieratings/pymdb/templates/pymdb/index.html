@@ -4,15 +4,37 @@
 {% block content %}
     <div class="jumbotron">
         <h1>The Python Movie Database</h1>
+
         <p class="lead">One million questionable ratings and counting.</p>
-        <p><a class="btn btn-lg btn-success" href="{% url 'user_register' %}" role="button">Sign up today</a></p>
-      </div>
+
+        <p><a class="btn btn-lg btn-success" href="{% url 'user_register' %}"
+              role="button">Sign up today</a></p>
+    </div>
     <h2>Top 20 Movies by Average Rating:</h2>
     <ol>
-        {% for movie in movies %}
-            <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
-                - Rating: {{ movie.rating_avg|floatformat:"3" }}
-                ({{ movie.rating_count }})
+
+        {% for movie in most_rated %}
+            <li><span class="badge">{{ movie.rating_avg|floatformat:"1" }}
+                </span>
+                <a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+
+                <small>
+                    <small>
+                        <small>
+                            <small>
+                                <small>
+                                    <small>
+                                        <small>
+                                            <!--FIXME: Find a better way to make small text-->
+                                            {{ movie.rating_count }}
+                                        </small>
+                                    </small>
+                                </small>
+                            </small>
+                        </small>
+                    </small>
+                </small>
+
             </li>
         {% endfor %}
 
@@ -21,9 +43,27 @@
     <h2>Top 20 Movies by Number of Ratings:</h2>
     <ol>
         {% for movie in most_rated %}
-            <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
-                - Rating: {{ movie.rating_avg|floatformat:"3" }}
-                ({{ movie.rating_count }})
+            <li><span class="badge">{{ movie.rating_avg|floatformat:"1" }}
+                </span>
+                <a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+
+                <small>
+                    <small>
+                        <small>
+                            <small>
+                                <small>
+                                    <small>
+                                        <small>
+                                            <!--FIXME: Find a better way to make small text-->
+                                            {{ movie.rating_count }}
+                                        </small>
+                                    </small>
+                                </small>
+                            </small>
+                        </small>
+                    </small>
+                </small>
+
             </li>
         {% endfor %}
 

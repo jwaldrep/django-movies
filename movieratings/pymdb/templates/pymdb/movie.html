@@ -19,10 +19,14 @@
 <h3>Ratings</h3>
     <ol>
         {% for rating in ratings %}
-        <li>{{ rating.rating }} -
+            <li><span class="badge">{{ rating.rating}}</span>
             <a href="{% url 'show_rater' rating.rater.id %}">{{ rating.rater }}</a>
         - {{ rating.time_modified }}
+            {% if rating.review %}
+                <ul><li> Review: <em>{{ rating.review }}</em></li></ul>
+        {% endif %}
         </li>
+{#        TODO: Add cycle for alternating backgrounds#}
         {% endfor %}
     </ol>
 {% endblock %}

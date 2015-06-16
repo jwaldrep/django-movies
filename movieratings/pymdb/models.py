@@ -146,8 +146,14 @@ class Rating(models.Model):
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField(validators=[validate_movie_rating])
-    time_added = models.DateTimeField(default=timezone.now) # FIXME: Keep migrations from trying to update to "now"
+    time_added = models.DateTimeField(default=timezone.now) # FIXME: Fixed (remove parens)
     time_modified = models.DateTimeField(default=timezone.now)
+    review = models.TextField(null=True, blank=True)
+
+    class Meta:
+        unique_together = (('rater', 'movie'),)
+
+
 
     @classmethod
     def top_rated(cls, n=2):
@@ -163,3 +169,6 @@ class Rating(models.Model):
 
     def __str__(self):
         return '{} - {}'.format('*' * self.rating, self.movie.title)
+
+    #TODO: Add function for most active users and add to index page
+    #TODO: Add review field
