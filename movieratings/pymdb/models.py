@@ -146,7 +146,7 @@ class Rating(models.Model):
     rater = models.ForeignKey(Rater)
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField(validators=[validate_movie_rating])
-    time_added = models.DateTimeField(default=timezone.now())
+    time_added = models.DateTimeField(default=timezone.now()) # FIXME: Keep migrations from trying to update to "now"
     time_modified = models.DateTimeField(default=timezone.now())
 
     @classmethod
