@@ -2,23 +2,30 @@
 
 
 {% block content %}
-<h2>Top 20 Movies by Average Rating:</h2>
-<ol>
-    {% for movie in movies %}
-    <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
-        - Rating: {{ movie.rating_avg|floatformat:"3" }} ({{ movie.rating_count }})
-    </li>
-    {% endfor %}
+    <div class="jumbotron">
+        <h1>The Python Movie Database</h1>
+        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <p><a class="btn btn-lg btn-success" href="{% url 'user_register' %}" role="button">Sign up today</a></p>
+      </div>
+    <h2>Top 20 Movies by Average Rating:</h2>
+    <ol>
+        {% for movie in movies %}
+            <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+                - Rating: {{ movie.rating_avg|floatformat:"3" }}
+                ({{ movie.rating_count }})
+            </li>
+        {% endfor %}
 
-</ol>
+    </ol>
 
     <h2>Top 20 Movies by Number of Ratings:</h2>
-<ol>
-    {% for movie in most_rated %}
-    <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
-        - Rating: {{ movie.rating_avg|floatformat:"3" }} ({{ movie.rating_count }})
-    </li>
-    {% endfor %}
+    <ol>
+        {% for movie in most_rated %}
+            <li><a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+                - Rating: {{ movie.rating_avg|floatformat:"3" }}
+                ({{ movie.rating_count }})
+            </li>
+        {% endfor %}
 
-</ol>
+    </ol>
 {% endblock %}
