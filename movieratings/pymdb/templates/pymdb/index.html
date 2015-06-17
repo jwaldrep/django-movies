@@ -10,62 +10,49 @@
         <p><a class="btn btn-lg btn-success" href="{% url 'user_register' %}"
               role="button">Sign up today</a></p>
     </div>
-    <h2>Top 20 Movies by Average Rating:</h2>
-    <ol>
+    <div class="col-md-6">
+        <h2>Highest Rated:</h2>
+        <ol>
 
-        {% for movie in most_rated %}
-            <li><span class="badge">{{ movie.rating_avg|floatformat:"1" }}
+            {% for movie in movies %}
+                <li><span class="badge">{{ movie.rating_avg|floatformat:"1" }}
                 </span>
-                <a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+                    <a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
 
-                <small>
                     <small>
                         <small>
                             <small>
-                                <small>
-                                    <small>
-                                        <small>
-                                            <!--FIXME: Find a better way to make small text-->
-                                            {{ movie.rating_count }}
-                                        </small>
-                                    </small>
-                                </small>
+                                <!--FIXME: Find a better way to make small text-->
+                                {{ movie.rating_count }}
                             </small>
                         </small>
                     </small>
-                </small>
 
-            </li>
-        {% endfor %}
+                </li>
+            {% endfor %}
 
-    </ol>
-
-    <h2>Top 20 Movies by Number of Ratings:</h2>
-    <ol>
-        {% for movie in most_rated %}
-            <li><span class="badge">{{ movie.rating_avg|floatformat:"1" }}
+        </ol>
+    </div>
+    <div class="col-md-6">
+        <h2>Most Rated:</h2>
+        <ol>
+            {% for movie in most_rated %}
+                <li><span class="badge">{{ movie.rating_avg|floatformat:"1" }}
                 </span>
-                <a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
+                    <a href="{% url 'show_movie' movie.id %}">{{ movie }}</a>
 
-                <small>
                     <small>
                         <small>
                             <small>
-                                <small>
-                                    <small>
-                                        <small>
-                                            <!--FIXME: Find a better way to make small text-->
-                                            {{ movie.rating_count }}
-                                        </small>
-                                    </small>
-                                </small>
+                                <!--FIXME: Find a better way to make small text-->
+                                {{ movie.rating_count }}
                             </small>
                         </small>
                     </small>
-                </small>
 
-            </li>
-        {% endfor %}
+                </li>
+            {% endfor %}
 
-    </ol>
+        </ol>
+    </div>
 {% endblock %}

@@ -8,6 +8,13 @@ from django.contrib import messages
 from django.core.exceptions import ObjectDoesNotExist
 
 
+# TODO: Possible features:
+#   Most active users (add to index using bootstrap columns)
+#       Both in terms of most ratings and most reviews
+#   Suggested movies
+#       |-> Correlation curve using Pandas with generated similar movies
+#   +Jumbotron image (requires css)
+#   Alternating colors on rows, maybe tables? What layout would look good?
 
 # FIXME: Prevent multiple users from logging in simultaneously
 def show_genre(request, genre_id):

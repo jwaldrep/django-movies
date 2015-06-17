@@ -1,5 +1,4 @@
-.jumbotron
-{
+.jumbotron {
 	/*font-size:8px;*/
 	background-image: url(popcorn-fade.jpg);
 	background-size: 1200px;
@@ -14,4 +13,11 @@
 	/*-webkit-opacity: 0.25;*/
   /*-moz-opacity: 0.25;*/
   /*opacity: 0.25;*/
+}
+
+.badge{
+	/*font-size:12px;*/
+	margin: 5px;
+	background-color: #008cba;
+	border-radius: 50%;
 }

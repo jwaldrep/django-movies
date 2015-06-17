@@ -10,6 +10,7 @@
     <title>PyMDb</title>
     {% bootstrap_css %}
     {% bootstrap_javascript jquery=1 %}
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <div class="container">
@@ -40,10 +41,9 @@
                 {#                            <li role="presentation"><a href="#">Contact</a></li>#}
                 {% if user.is_authenticated %}
                     <li role="presentation"><a href="{% url 'show_rater' user.rater.id %}">
-                        <!--FIXME: add link to user profile-->
                         Welcome, {{ user.get_username }}!</a></li>
                     <li role="presentation">
-                        <a href="/logout"> [Log Out]</a></li>
+                        <a href="/logout"> [Log Out]</a></li> <!--FIXME: Make all links relative -->
                 {% else %}
                     <li role="presentation"><a href="/login">[Log
                         In]</a></li>
