@@ -1,4 +1,6 @@
 from django.db.models import Count, Avg
+from django.forms import model_to_dict
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from .models import Rating, Movie, Rater
@@ -195,3 +197,30 @@ def logout_view(request):
 #     return render(request, "movie", {'rating_form': rating_form,   # FIXME: Add redirect
 #                                      })
 #     # return redirect('index')
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+import matplotlib
+matplotlib.style.use('ggplot')
+
+def ratings_chart(request):
+    ratings = Rating.objects.all()
+    df = pd.DataFrame(model_to_dict(rating) for rating in ratings)
+    df['count'] = 1
+    df.index = df['time_added']
+    counts = df['count']
+    counts = counts.sort_index()
+    series = pd.expanding_count(counts).resample('W', how=np.max, fill_method='pad')
+    response = HttpResponse(content_type='image/png')
+
+    fig = plt.figure()
+    # ax = fig.add_subplot(111)
+    # ax.plot(series)
+    series.plot()
+    plt.title("Total ratings over time")
+    plt.xlabel("")
+    canvas = FigureCanvas(fig)
+    canvas.print_png(response)
+    return response
