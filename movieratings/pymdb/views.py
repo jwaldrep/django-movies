@@ -1,5 +1,6 @@
 from django.db.models import Count, Avg
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from .models import Rating, Movie, Rater
 from django.contrib.auth.models import User
 from pymdb.forms import UserForm, RaterForm, RatingForm
@@ -35,10 +36,10 @@ def index(request):
     #    Employer.objects.values('id').annotate(jobtitle_count=Count('jobtitle')).order_by('-jobtitle_count')[:5]
     movies = Movie.objects.annotate(rating_avg=Avg('rating__rating')).annotate(
         rating_count=Count('rating__rating')).filter(
-        rating_count__gte=10).order_by('-rating_avg')[:20]
+        rating_count__gte=10).order_by('-rating_avg')[:10]
     most_rated = Movie.objects.annotate(
         rating_avg=Avg('rating__rating')).annotate(
-        rating_count=Count('rating__rating')).order_by('-rating_count')[:20]
+        rating_count=Count('rating__rating')).order_by('-rating_count')[:10]
     # counts = movies.
     # Item.objects.annotate(type_count=models.Count("type")).filter(type_count__gt=1).order_by("-type_count")
 
@@ -49,6 +50,25 @@ def index(request):
                    "most_rated": most_rated,
                    })
 
+class MovieListView(ListView):
+    template_name = "pymdb/movie_list.html"
+    model = Movie
+    context_object_name = 'movies'
+    queryset = Movie.objects.annotate(rating_avg=Avg('rating__rating')).annotate(
+        rating_count=Count('rating__rating')).filter(
+        rating_count__gte=10).order_by('-rating_avg')  # FIXME: How to speed up this query?
+    paginate_by = 20
+    header = "Top Rated Movies"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["header"] = self.header
+        # if self.request.user.is_authenticated():
+        #     favorites = self.request.user.favorited_updates.all()
+        # else:
+        #     favorites = []
+        # context["favorites"] = favorites
+        return context
 
 def show_rater(request, rater_id):
     rater = Rater.objects.get(pk=rater_id)

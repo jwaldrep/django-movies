@@ -147,7 +147,7 @@ class Rating(models.Model):
     movie = models.ForeignKey(Movie)
     rating = models.PositiveSmallIntegerField(validators=[validate_movie_rating])
     time_added = models.DateTimeField(default=timezone.now) # FIXME: Fixed (remove parens)
-    time_modified = models.DateTimeField(default=timezone.now)
+    time_modified = models.DateTimeField(default=timezone.now) # FIXME: use auto_now_add instead?
     review = models.TextField(null=True, blank=True)
 
     class Meta:
